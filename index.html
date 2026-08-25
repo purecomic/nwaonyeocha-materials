@@ -143,20 +143,38 @@
   .why-item p{color:var(--ivory-dim); font-size:.88rem;}
 
   /* our work */
+  .filter-row{display:flex; gap:.7rem; margin-bottom:2rem; flex-wrap:wrap;}
+  .filter-btn{
+    font-family:'IBM Plex Mono', monospace; font-size:.72rem; letter-spacing:.06em;
+    text-transform:uppercase; padding:.6rem 1.2rem; border-radius:999px;
+    border:1px solid var(--indigo-deep); background:transparent; color:var(--indigo-deep);
+    cursor:pointer; transition:background .2s, color .2s;
+  }
+  .filter-btn:hover{background:rgba(28,39,64,.08);}
+  .filter-btn.active{background:var(--indigo-deep); color:var(--ivory);}
   .work-grid{display:grid; grid-template-columns:repeat(3, 1fr); gap:1rem;}
   .work-tile{
     aspect-ratio:4/3; border-radius:var(--radius); position:relative;
     display:flex; align-items:flex-end; padding:1rem;
-    background:linear-gradient(160deg, var(--indigo-mid), var(--indigo-deep));
-    overflow:hidden;
+    overflow:hidden; background:var(--indigo-deep);
   }
+  .work-tile img{
+    position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
+    transition:transform .35s ease;
+  }
+  .work-tile:hover img{transform:scale(1.06);}
   .work-tile::after{
     content:""; position:absolute; inset:0;
-    background-image:repeating-linear-gradient(60deg, rgba(244,237,224,.06) 0 1px, transparent 1px 18px);
+    background:linear-gradient(to top, rgba(28,39,64,.85) 0%, rgba(28,39,64,.05) 55%);
   }
-  .work-tile span{position:relative; z-index:2; color:var(--ivory); font-family:'IBM Plex Mono',monospace; font-size:.75rem; letter-spacing:.05em;}
-  .work-tile:nth-child(3n+1){background:linear-gradient(160deg,#7a5230,var(--indigo-deep));}
-  .work-tile:nth-child(3n+2){background:linear-gradient(160deg,var(--rust),var(--indigo-deep));}
+  .work-tile .tag{
+    position:relative; z-index:2; font-family:'IBM Plex Mono',monospace;
+    font-size:.68rem; letter-spacing:.05em; text-transform:uppercase; background:var(--gold);
+    color:var(--indigo-deep); padding:.2rem .55rem; border-radius:999px; margin-bottom:.4rem;
+    display:inline-block; width:fit-content;
+  }
+  .work-tile span.label{position:relative; z-index:2; color:var(--ivory); font-family:'IBM Plex Mono',monospace; font-size:.72rem; letter-spacing:.05em; display:block;}
+  .work-tile.hidden{display:none;}
 
   /* testimonials */
   .demo-flag{
@@ -317,15 +335,46 @@
     <div class="section-head">
       <span class="eyebrow">Our Work</span>
       <h2>A look at recent pieces</h2>
-      <p>Sample gallery — swap these tiles for real product photos.</p>
+      <p>Sample gallery — swap these photos for your own product shots when ready. Use the buttons to filter by men's or women's items.</p>
     </div>
-    <div class="work-grid">
-      <div class="work-tile"><span>Ankara Set — Ready-to-Wear</span></div>
-      <div class="work-tile"><span>Aso-Oke — Native Wear</span></div>
-      <div class="work-tile"><span>Cotton Bundle — Fabric</span></div>
-      <div class="work-tile"><span>Tailored Kaftan — Custom</span></div>
-      <div class="work-tile"><span>Lace Gown — Occasion Wear</span></div>
-      <div class="work-tile"><span>Everyday Wrap — Ready-to-Wear</span></div>
+    <div class="filter-row" id="filterRow">
+      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="men">Men's Clothing</button>
+      <button class="filter-btn" data-filter="women">Women's Clothing</button>
+    </div>
+    <div class="work-grid" id="workGrid">
+      <div class="work-tile" data-cat="men">
+        <img src="https://images.unsplash.com/photo-1622450180332-3da1126f10a4?w=700&q=60&auto=format&fit=crop" alt="Man in a shirt and trousers">
+        <span class="tag">Men</span><span class="label">Shirt &amp; Trouser Set</span>
+      </div>
+      <div class="work-tile" data-cat="women">
+        <img src="https://images.unsplash.com/photo-1616313253719-c46514cddee1?w=700&q=60&auto=format&fit=crop" alt="Woman in a floral dress">
+        <span class="tag">Women</span><span class="label">Floral Dress</span>
+      </div>
+      <div class="work-tile" data-cat="men">
+        <img src="https://images.unsplash.com/photo-1479064555552-3ef4979f8908?w=700&q=60&auto=format&fit=crop" alt="Pair of brown leather boots">
+        <span class="tag">Men</span><span class="label">Leather Boots</span>
+      </div>
+      <div class="work-tile" data-cat="women">
+        <img src="https://images.unsplash.com/photo-1739773375456-79be292cedb1?w=700&q=60&auto=format&fit=crop" alt="Striped occasion dress on a mannequin">
+        <span class="tag">Women</span><span class="label">Occasion Dress</span>
+      </div>
+      <div class="work-tile" data-cat="men">
+        <img src="https://images.unsplash.com/photo-1537261131936-3cdff36a1ac9?w=700&q=60&auto=format&fit=crop" alt="Man wearing red sneakers">
+        <span class="tag">Men</span><span class="label">Casual Sneakers</span>
+      </div>
+      <div class="work-tile" data-cat="women">
+        <img src="https://images.unsplash.com/photo-1567401893414-76b7b1e5a7a5?w=700&q=60&auto=format&fit=crop" alt="Rack of assorted women's clothing">
+        <span class="tag">Women</span><span class="label">New Arrivals</span>
+      </div>
+      <div class="work-tile" data-cat="men">
+        <img src="https://images.unsplash.com/photo-1626557981101-aae6f84aa6ff?w=700&q=60&auto=format&fit=crop" alt="Man in a checkered button-up shirt">
+        <span class="tag">Men</span><span class="label">Casual Shirt</span>
+      </div>
+      <div class="work-tile" data-cat="women">
+        <img src="https://images.unsplash.com/photo-1532453288672-3a27e9be9efd?w=700&q=60&auto=format&fit=crop" alt="Assorted shirts on a rack">
+        <span class="tag">Women</span><span class="label">Blouses &amp; Tops</span>
+      </div>
     </div>
   </section>
 
@@ -416,6 +465,21 @@
   });
   scrim.addEventListener('click', closeNav);
   document.querySelectorAll('.sidenav nav a').forEach(a => a.addEventListener('click', closeNav));
+
+  // Gallery filter buttons (All / Men / Women)
+  const filterRow = document.getElementById('filterRow');
+  const workTiles = document.querySelectorAll('#workGrid .work-tile');
+  filterRow.addEventListener('click', (e) => {
+    const btn = e.target.closest('.filter-btn');
+    if (!btn) return;
+    filterRow.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const filter = btn.dataset.filter;
+    workTiles.forEach(tile => {
+      const show = filter === 'all' || tile.dataset.cat === filter;
+      tile.classList.toggle('hidden', !show);
+    });
+  });
 
   // WhatsApp contact form — replace the number below with the real business WhatsApp number
   const WHATSAPP_NUMBER = "2348000000000";
